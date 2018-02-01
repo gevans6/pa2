@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script language="javascript">
+
+        function searchTrie() {
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:57707/WebService1.asmx/searchTrie',
+                data: JSON.stringify({ input: $('#myInput').val()}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success:  function(data)
+                {
+                    $("#results").html("");
+                    console.log(data);
+                    //document.getElementById("results").innerHTML(data.d)
+                    for (i = 0; i < data.d.length; i++) {
+                        $("#results").append(data.d[i]);
+                        $("#results").append("<br/>");
+                    }
+
+                },
+                failure: console.log("failure")
+            });
+        }
+    </script>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <input type="text" name="data" id="myInput" placeholder="Search for titles.." onkeyup="searchTrie()"><br />
+
+    <div id="results"></div>
+
+</body>
+</html>
